@@ -12,9 +12,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: 'T-Math',
       theme: ThemeData(
-        cardColor: Color(0xFF63A4FF),
         brightness: Brightness.dark,
-        primaryColor: Colors.blue[700],
+        primaryColor: Color(0xFFD32F2F),
         scaffoldBackgroundColor: Colors.white,
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Theme.of(context).primaryColor,
@@ -24,15 +23,16 @@ class MainApp extends StatelessWidget {
           Theme.of(context).textTheme.copyWith(
                 headline5: TextStyle(
                   color: Colors.white,
-                  fontSize: 24.0,
+                  fontSize: 48.0,
                   fontWeight: FontWeight.bold,
                 ),
                 headline4: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
                 ),
                 headline3: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 14.0,
                 ),
               ),
@@ -57,18 +57,35 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            widget.title,
-            style: Theme.of(context).textTheme.headline5,
-          ),
-        ),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
+              ClipPath(
+                clipper: _HeaderClipper(),
+                child: Container(
+                  height: 176.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        const Color(0xFF9A0007),
+                        const Color(0xFFFF6659),
+                      ],
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Text(
+                      widget.title,
+                      style: Theme.of(context).textTheme.headline5,
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                ),
+              ),
               _UnitNameItem(
                 title: "เซต",
                 subtitle: "Set",
@@ -129,12 +146,29 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Back to Top',
-        child: Icon(Icons.arrow_upward),
-      ),
     );
+  }
+}
+
+class _HeaderClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, size.height - 80);
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.height,
+      size.width,
+      size.height - 80,
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
 
@@ -152,46 +186,56 @@ class _UnitNameItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(
-        vertical: 8.0,
-        horizontal: 16.0,
-      ),
-      padding: const EdgeInsets.all(24.0),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: const BorderRadius.all(
-          const Radius.circular(8.0),
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+          vertical: 8.0,
+          horizontal: 16.0,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0xFFAAAAAA),
-            offset: const Offset(4.0, 4.0),
-            blurRadius: 4.0,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              Text(
-                "($subtitle)",
-                style: Theme.of(context).textTheme.headline3,
-              ),
+        padding: const EdgeInsets.all(24.0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomRight,
+            end: Alignment.topLeft,
+            colors: [
+              const Color(0xFF3383CD),
+              const Color(0xFF11249F),
             ],
           ),
-          Icon(
-            Icons.keyboard_arrow_right,
-            color: Colors.black,
-          )
-        ],
+          borderRadius: const BorderRadius.all(
+            const Radius.circular(8.0),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xFFAAAAAA),
+              offset: const Offset(4.0, 4.0),
+              blurRadius: 4.0,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+                Text(
+                  "($subtitle)",
+                  style: Theme.of(context).textTheme.headline3,
+                ),
+              ],
+            ),
+            Icon(
+              Icons.keyboard_arrow_right,
+              color: Colors.white,
+            )
+          ],
+        ),
       ),
     );
   }
