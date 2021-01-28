@@ -44,7 +44,10 @@ class _UnitInfoPageState extends State<UnitInfoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.arguments.title),
+        title: Text(
+          widget.arguments.title,
+          style: Theme.of(context).textTheme.headline4.copyWith(fontSize: 18.0),
+        ),
       ),
       body: Container(
         child: Center(
