@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t_math/unit_info_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "/home_page";
@@ -9,6 +10,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  _launchFormURL() async {
+    const url = 'https://docs.google.com/forms/d/e/1FAIpQLSf1ry28VzUPXl2RMcQHUCkdLdKPW4P_S99Z4qodB6j2g4gL3A/viewform';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,6 +112,22 @@ class _HomePageState extends State<HomePage> {
               _UnitNameItem(
                 title: "สถิติ",
                 subtitle: "Statistics",
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+                      textStyle: Theme.of(context)
+                          .textTheme
+                          .headline4
+                          .copyWith(color: Colors.black),
+                    ),
+                    onPressed: () => _launchFormURL(),
+                    child: Text("แบบประเมินความพึงพอใจ"),
+                  ),
+                ),
               ),
             ],
           ),
