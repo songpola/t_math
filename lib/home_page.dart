@@ -54,12 +54,10 @@ class _HomePageState extends State<HomePage> {
               _UnitNameItem(
                 title: "เซต",
                 subtitle: "Set",
-                isEnabled: false,
               ),
               _UnitNameItem(
                 title: "ตรรกศาสตร์",
                 subtitle: "Logic",
-                isEnabled: false,
               ),
               _UnitNameItem(
                 title: "จำนวนจริง",
@@ -68,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               _UnitNameItem(
                 title: "ความสัมพันธ์และฟังก์ชัน",
                 subtitle: "Relation & Function",
-                isEnabled: false,
+                pdfAsset: "RelationAndFunction",
               ),
               _UnitNameItem(
                 title: "เลขยกกำลัง และลอการิทึม",
